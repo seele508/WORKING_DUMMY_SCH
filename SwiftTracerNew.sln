@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwiftTracerNew", "SwiftTracerNew.csproj", "{20CCE70D-DE16-48CE-83BD-C61A97832BB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AF260111-C307-4284-8C27-8503ED0EDB86} = {AF260111-C307-4284-8C27-8503ED0EDB86}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "Helper\Helper.csproj", "{AF260111-C307-4284-8C27-8503ED0EDB86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20CCE70D-DE16-48CE-83BD-C61A97832BB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20CCE70D-DE16-48CE-83BD-C61A97832BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20CCE70D-DE16-48CE-83BD-C61A97832BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20CCE70D-DE16-48CE-83BD-C61A97832BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF260111-C307-4284-8C27-8503ED0EDB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF260111-C307-4284-8C27-8503ED0EDB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF260111-C307-4284-8C27-8503ED0EDB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF260111-C307-4284-8C27-8503ED0EDB86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B2DB1EF-65FF-46EF-9872-33FDCA00F225}
+	EndGlobalSection
+EndGlobal
