@@ -179,6 +179,7 @@
   <ItemGroup>
     <Content Include="icon.ico" />
     <Content Include="newicon.ico" />
+    <None Include="Pictures\home.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
