@@ -28,17 +28,17 @@ namespace SchTracer
         private DBSchParameterV2 oSch_PortalTesting;
         private DBSchParameterV2 oSCh_ParamV2;
 
-        private string schName_PortalTesting01;
-        private int maxThread_PortalTesting01 = 1;
-        private int maxResult_PortalTesting01 = 1;
-        private int runningThread_PortalTesting01 = 0;
-        private int cancelThread_PortalTesting01 = 0;
-        private int interval_PortalTesting01 = 0;
-        private String timeStart_PortalTesting01 = "06:00:00";
-        private String timeStop_PortalTesting01 = "20:00:00";
-        private int checkWeekend_ProtalTesting01 = 0;
-        private System.Windows.Forms.Timer timer_PortalTesting01;
-        List<BackgroundWorker> bgws_PortalTesting01 = new List<BackgroundWorker>();
+        private string schName_Dummy_01;
+        private int maxThread_Dummy_01 = 1;
+        private int maxResult_Dummy_01 = 1;
+        private int runningThread_Dummy_01 = 0;
+        private int cancelThread_Dummy_01 = 0;
+        private int interval_Dummy_01 = 0;
+        private String timeStart_Dummy_01 = "06:00:00";
+        private String timeStop_Dummy_01 = "20:00:00";
+        private int checkWeekend_Dummy_01 = 0;
+        private System.Windows.Forms.Timer timer_Dummy_01;
+        List<BackgroundWorker> bgws_Dummy_01 = new List<BackgroundWorker>();
 
         private int totalfunc = 0;
 

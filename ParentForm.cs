@@ -36,22 +36,21 @@ namespace SchTracer
         public delegate void populateLabelDelegate(String text);
 
         private String msgRunSch = "";
-        //Thread Testing 1
         //ini nilai ke overwrite dari config / db
 
-        //Mirroring
-        private DBSchParameter oSwiftTracer_Mirroring;
-        private string schName_Mirroring;
-        private int maxThread_Mirroring = 1;
-        private int maxResult_Mirroring = 1;
-        private int runningThread_Mirroring = 0;
-        private int cancelThread_Mirroring = 0;
-        private int interval_Mirroring = 0;
-        private String timeStart_Mirroring = "06:00:00";
-        private String timeStop_Mirroring = "20:00:00";
-        private int checkWeekend_Mirroring = 0;
-        private System.Windows.Forms.Timer timer_Mirroring;
-        List<BackgroundWorker> bgws_Mirroring = new List<BackgroundWorker>();
+        //DUMMY_01
+        private DBSchParameter oDummy_01;
+        private string schName_Dummy_01;
+        private int maxThread_Dummy_01 = 1;
+        private int maxResult_Dummy_01 = 1;
+        private int runningThread_Dummy_01 = 0;
+        private int cancelThread_Dummy_01 = 0;
+        private int interval_Dummy_01 = 0;
+        private String timeStart_Dummy_01 = "06:00:00";
+        private String timeStop_Dummy_01 = "20:00:00";
+        private int checkWeekend_Dummy_01 = 0;
+        private System.Windows.Forms.Timer timer_Dummy_01;
+        List<BackgroundWorker> bgws_Dummy_01 = new List<BackgroundWorker>();
 
 
         public Logger oLogger;
@@ -92,28 +91,28 @@ namespace SchTracer
             #endregion
             
            
-            oSwiftTracer_Mirroring = new DBSchParameter(oDB, oConfig.getParameter("APPName"), oConfig.getParameter("APPFunction_Mirroring"));
-            if (!oSwiftTracer_Mirroring.isValidParameterValue())
+            oDummy_01 = new DBSchParameter(oDB, oConfig.getParameter("APPName"), oConfig.getParameter("APPFunction_Dummy_01"));
+            if (!oDummy_01.isValidParameterValue())
             {
-                MessageBox.Show("Error " + oSwiftTracer_Mirroring.getErrorMessage());
+                MessageBox.Show("Error " + oDummy_01.getErrorMessage());
                 System.Environment.Exit(0);
             }
             else
             {
-                schName_Mirroring = oSwiftTracer_Mirroring.SCH_NAME();
-                maxThread_Mirroring = oSwiftTracer_Mirroring.MAX_THREAD();
-                maxResult_Mirroring = oSwiftTracer_Mirroring.MAX_QUERY_RESULT();
-                interval_Mirroring = oSwiftTracer_Mirroring.TIMER_INTERVAL_MILISECOND();
-                timeStart_Mirroring = oSwiftTracer_Mirroring.START_TIME();
-                timeStop_Mirroring = oSwiftTracer_Mirroring.STOP_TIME();
-                checkWeekend_Mirroring = oSwiftTracer_Mirroring.WEEKEND_CHECK();
+                schName_Dummy_01 = oDummy_01.SCH_NAME();
+                maxThread_Dummy_01 = oDummy_01.MAX_THREAD();
+                maxResult_Dummy_01 = oDummy_01.MAX_QUERY_RESULT();
+                interval_Dummy_01 = oDummy_01.TIMER_INTERVAL_MILISECOND();
+                timeStart_Dummy_01 = oDummy_01.START_TIME();
+                timeStop_Dummy_01 = oDummy_01.STOP_TIME();
+                checkWeekend_Dummy_01 = oDummy_01.WEEKEND_CHECK();
             }
 
             
-            lblSchName.Text = oSwiftTracer_Mirroring.SCH_NAME();
+            lblSchName.Text = oDummy_01.SCH_NAME();
 
             //lblLastRun.Text = DateTime.ParseExact(oSwiftTracer_Mirroring.LAST_RUN_V2(), "M/d/yyyy h:mm:ss tt", CultureInfo.GetCultureInfo("en-US")).ToString("dd-MM-yyyy HH:mm:ss");
-            lblLastRun.Text = "Wololololo";
+            lblLastRun.Text = oDummy_01.LAST_RUN_V2().ToString();
             timeoutLimit = int.Parse(oConfig.getParameter("TimeoutLimit"));
 
             oData = new cData(oDB);
