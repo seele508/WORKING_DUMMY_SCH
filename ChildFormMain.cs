@@ -331,8 +331,8 @@ namespace SchTracer
             try
             {
                 int prevRepeatToday = param.REPEAT_TODAY();
-                //DateTime dtLastRun = DateTime.ParseExact(param.LAST_RUN(), "M/d/yyyy", null);
-                DateTime dtLastRun = DateTime.ParseExact(param.LAST_RUN(), "dd/MM/yyyy", null);
+                DateTime dtLastRun = DateTime.ParseExact(param.LAST_RUN(), "M/d/yyyy", null);
+                //DateTime dtLastRun = DateTime.ParseExact(param.LAST_RUN(), "dd/MM/yyyy", null);
                 DateTime dtNow = DateTime.Now;
 
 
