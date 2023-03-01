@@ -18,16 +18,25 @@ using System.Configuration;
 using SchTracer.Models;
 using SchTracer.WebServices;
 using Helper.Models;
+using System.Threading.Tasks;
+using Confluent.Kafka;
+using Microsoft.Extensions.Configuration;
+using ConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
+using System.Diagnostics;
+using SchTracer.Properties;
+using static Confluent.Kafka.ConfigPropertyNames;
+using static System.Windows.Forms.AxHost;
 
 namespace SchTracer
 {
     public partial class ChildFormMain : Form
     {
-        private Config oConfig;
+        private Helper.Config oConfig;
         private cData oData;
         private cDataSqlSrv oDataSqlSrv;
         private DBConnection oDB;
 
+        private cProducer oProducer;
         //private DBConnection oDBSQLServer;
         private DBConnectionSqlSrv oDBSQLServer;
 
@@ -90,7 +99,7 @@ namespace SchTracer
         public ChildFormMain()
         {
             InitializeComponent();
-            oConfig = new Config();
+            oConfig = new Helper.Config();
 
             #region Connection Mysql DB
             // Cek koneksi
@@ -870,7 +879,7 @@ namespace SchTracer
                 Invoke(new populateTextBoxDelegate(populateTextBoxWithTimeStamp), new object[] { message });
             }
         }
-        public void DoWork_Dummy_01(Object sender, DoWorkEventArgs e)
+        public async void DoWork_Dummy_01(Object sender, DoWorkEventArgs e)
         {
             BackgroundWorker workerThread = sender as BackgroundWorker;
             int tred = (int)e.Argument;
@@ -912,6 +921,51 @@ namespace SchTracer
 
                     oData.updateSchRunning(appName, appFunction);
 
+
+                    try
+                    {
+                        /*
+                        var proc = new Process
+                        {
+                            StartInfo = new ProcessStartInfo
+                            {
+                                FileName = @"C:\Program Files\Microsoft Visual Studio 14.0\Common7\IDE\tf.exe",
+                                //FileName = @"D:\2022\kafka-dotnet-getting-started\producer\producer_04\bin\Debug\net6.0\config.txt",
+                                Arguments = " ping google.com ",
+                                UseShellExecute = false,
+                                RedirectStandardOutput = true,
+                                CreateNoWindow = true,
+                                WorkingDirectory = @"D:\2022\kafka-dotnet-getting-started\producer\producer_04\"
+                            }
+                        };
+
+                        proc.Start();
+                        */
+
+                        //System.Diagnostics.Process.Start("CMD.exe", "/K cd D:/2022/kafka-dotnet-getting-started/producer/producer_04 & dotnet run $(pwd)/../config.txt");
+                        //System.Diagnostics.Process.Start("CMD.exe", "/C cd D:/2022/kafka-dotnet-getting-started/producer/producer_04 & dotnet run $(pwd)/../config.txt");
+
+
+                        //System.Diagnostics.Process.Start("CMD.exe", "/C cd D:/2022/kafka-dotnet-getting-started/producer/producer_04 & dotnet run $(pwd)/../config.txt");
+
+                        
+                        Process cmd = new Process();
+                        cmd.StartInfo.FileName = "cmd.exe";
+                        //cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        cmd.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                        //cmd.StartInfo.Arguments = "/C cd D:/2022/kafka-dotnet-getting-started/producer/producer_04 & dotnet run $(pwd)/../config.txt";
+
+                        cmd.StartInfo.Arguments = "/C cd D:/ & copy D:/Budiman.png D:/Dummy/ ";
+
+                        //cmd.StartInfo.Arguments = "/C copy c:/Budiman.png d:";
+                        cmd.Start();
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Invoke(new populateTextBoxDelegate(populateTextBoxWithTimeStamp), new object[] { ex.Message});
+                    }
+
                     Invoke(new populateTextBoxDelegate(populateTextBoxWithTimeStamp), new object[] { appFunction + " Jalan Bois..." });
 
                     addRunTodayRepeateValue(appName, appFunction, ref oDummy_01);
@@ -927,6 +981,70 @@ namespace SchTracer
                 else
                 {
                     Invoke(new populateTextBoxDelegate(populateTextBoxWithTimeStamp), new object[] { appFunction + " Out of Time..." });
+                }
+            }
+        }
+
+        public static async Task Wolololo(string[] args)
+        {
+            var config = new ProducerConfig { BootstrapServers = "https://kafka5.dev.bri.co.id:9021" };
+
+            // If serializers are not specified, default serializers from
+            // `Confluent.Kafka.Serializers` will be automatically used where
+            // available. Note: by default strings are encoded as UTF8.
+            using (var p = new ProducerBuilder<Null, string>(config).Build())
+            {
+                try
+                {
+                    //var dr = await p.ProduceAsync("esb_swift_mx_transaction", new Message<Null, string> { Value = "test" });
+                    //var dr = await p.Produce("esb_swift_mx_transaction", new Message<string, string> { Value = "Budi" ,Value = "test" });
+                    //Console.WriteLine($"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'");
+                    //var mesg = dr.TopicPartitionOffset.ToString();
+                    //Invoke(new populateTextBoxDelegate(populateTextBoxWithTimeStamp), new object[] { "Delivered to" + mesg });
+                    //MessageBox.Show(mesg);
+
+                    IConfiguration configuration = new ConfigurationBuilder()
+            .AddIniFile(args[0])
+            .Build();
+
+                    const string topic = "purchases";
+
+                    string[] users = { "eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther" };
+                    string[] items = { "book", "alarm clock", "t-shirts", "gift card", "batteries" };
+
+                    using (var producer = new ProducerBuilder<string, string>(
+                        configuration.AsEnumerable()).Build())
+                    {
+                        var numProduced = 0;
+                        Random rnd = new Random();
+                        const int numMessages = 10;
+                        for (int i = 0; i < numMessages; ++i)
+                        {
+                            var user = users[rnd.Next(users.Length)];
+                            var item = items[rnd.Next(items.Length)];
+
+                            producer.Produce(topic, new Message<string, string> { Key = user, Value = item },
+                                (deliveryReport) =>
+                                {
+                                    if (deliveryReport.Error.Code != ErrorCode.NoError)
+                                    {
+                                        Console.WriteLine($"Failed to deliver message: {deliveryReport.Error.Reason}");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Produced event to topic {topic}: key = {user,-10} value = {item}");
+                                        numProduced += 1;
+                                    }
+                                });
+                        }
+
+                        producer.Flush(TimeSpan.FromSeconds(10));
+                    }
+                }
+
+                catch (ProduceException<Null, string> e)
+                {
+                    Console.WriteLine($"Delivery failed: {e.Error.Reason}");
                 }
             }
         }
